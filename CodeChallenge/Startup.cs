@@ -38,6 +38,12 @@ namespace CodeChallenge
                 optionsBuilder.MigrationsAssembly("CodeChallenge")), ServiceLifetime.Scoped
             );
 
+            using var scope = services.BuildServiceProvider().CreateScope();
+            var serviceProvider = scope.ServiceProvider;
+
+            var dbContext = serviceProvider.GetRequiredService<CodeChallengeDbContext>();
+
+            dbContext.Database.Migrate();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
